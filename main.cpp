@@ -4,8 +4,17 @@
 #include <ctime>
 #include <unistd.h>
 #include <sstream>
+#include <windows.h>
 
 using namespace std;
+
+struct timestampflag{
+    time_t time;
+    bool status;
+};
+
+//multimap<string, timestampflag> tagidmmap; //pair<time_t,bool>
+multimap<string, pair<time_t,bool>> tagidmmap;
 
 template<typename T>
 string toString(const T &t)
@@ -54,8 +63,21 @@ int main()
     {
         time_t now = time(0);
         tagIDMAP[cotainernumber][now] = false;
+        timestampflag tsv;
+        tsv.time = now;
+        tsv.status = false;
+        pair<time_t,bool> timeflag(now,false);
+        tagidmmap.insert (cotainernumber) = timeflag;
+        //tagidtimestampflag(cotainernumber).status = false;
         cout <<"Time: " << now << endl;
+
+#ifdef linux
+        sleep(1);
         usleep(1000 * 1000 );
+#else
+        Sleep(1000);
+#endif
+
     }
     cout<<"MAP of Map Size: "<<tagIDMAP[cotainernumber].size() << " Map size: " <<tagIDMAP.size() <<endl;
 
